@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -28,11 +29,19 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class _Top extends StatelessWidget {
+class _Top extends StatefulWidget {
   const _Top({super.key});
 
   @override
+  State<_Top> createState() => _TopState();
+}
+
+class _TopState extends State<_Top> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
     final textTheme = Theme.of(context).textTheme;
 
     return Expanded(
@@ -48,21 +57,46 @@ class _Top extends StatelessWidget {
                style: textTheme.bodyLarge,
             ),
             Text(
-              '2023.11.23',
+              '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
               style: textTheme.bodyMedium,
             ),
             IconButton(
               iconSize: 60.0,
               color: Colors.red,
               onPressed: (){
-                
+                showCupertinoDialog(
+                  context: context, 
+                  barrierDismissible: true,
+                  builder: (BuildContext context) {
+                    return Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        color: Colors.white,
+                        height: 300.0,
+                        width: MediaQuery.of(context).size.width,
+                        child: CupertinoDatePicker(
+                          // date 기준으로 날짜 선택 가능하게 정렬
+                          mode: CupertinoDatePickerMode.date,
+                          // 한국 날짜 서순에 맞게 ymd 정렬
+                          dateOrder: DatePickerDateOrder.ymd,
+                          onDateTimeChanged: (DateTime date) {
+                            setState(() {
+                              selectedDate = date;
+                            });
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                );
               }, 
               icon: Icon(
                 Icons.favorite,
               ),
             ),
             Text(
-              'D+1',
+              // .inDays => 일 수로 변환
+              'D+${now.difference(selectedDate).inDays + 1}',
               style: textTheme.displayMedium,
             ),
           ],

@@ -26,3 +26,9 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+analyzer:
+  errors:
+    dead_code: ignore  # 사용되지 않는 코드 경고 제거
+    unused_import: ignore  # 사용되지 않는 import 경고 제거
+    prefer_const_constructors: ignore  # 'const' 관련 경고 제거

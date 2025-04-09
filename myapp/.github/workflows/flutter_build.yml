@@ -3,7 +3,8 @@ name: Flutter APK Build
 on:
   push:
     branches:
-      - main  # main 브랜치에 푸시될 때마다 실행됨
+      - main
+  workflow_dispatch:
 
 jobs:
   build:

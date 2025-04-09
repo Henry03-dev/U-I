@@ -16,15 +16,19 @@ jobs:
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
+        # with:
+        #   flutter-version: "stable"  # 생략 또는 명시적으로 지정
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: myapp
 
       - name: Build APK
         run: flutter build apk --release
+        working-directory: myapp
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: myapp-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: myapp/build/app/outputs/flutter-apk/app-release.apk

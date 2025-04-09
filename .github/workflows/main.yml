@@ -14,17 +14,15 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Upgrade packages
-        run: flutter pub upgrade
-        working-directory: myapp
-        
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
-        # with:
-        #   flutter-version: "stable"  # 생략 또는 명시적으로 지정
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: myapp
+
+      - name: Upgrade packages
+        run: flutter pub upgrade
         working-directory: myapp
 
       - name: Build APK
